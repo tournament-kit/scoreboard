@@ -49,7 +49,7 @@ jobs:
         run: npm list
 
       - name: Build
-        run: npm run build:scoreboard
+        run: npm run build
 
   deploy:
     name: Deploy
