@@ -1,24 +1,19 @@
-name: CI
+name: Deployment
 
 on:
   push:
     branches:
       - main
   pull_request:
+  workflow_dispatch: {}
 
 permissions:
   actions: read
   contents: read
-name: Deployment
 
 concurrency:
   group: production
   cancel-in-progress: true
-
-on:
-  workflow_dispatch: {}
-  push:
-    branches: ["main"]
 
 jobs:
   build:
