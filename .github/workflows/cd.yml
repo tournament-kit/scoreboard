@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    name: Build Frontend
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -48,7 +48,11 @@ jobs:
         continue-on-error: true
         run: npm list
 
+      - name: Build
+        run: npm run build:scoreboard
+
   deploy:
+    name: Build
     # Add a dependency to the build job
     needs: build
 
