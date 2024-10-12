@@ -48,8 +48,7 @@ jobs:
         continue-on-error: true
         run: yarn list
 
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: Install dependencies
+      - name: Install dependencies
         run: yarn
 
       - name: Build
