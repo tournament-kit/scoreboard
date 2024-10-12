@@ -52,7 +52,7 @@ jobs:
         run: npm run build:scoreboard
 
   deploy:
-    name: Build
+    name: Deploy
     # Add a dependency to the build job
     needs: build
 
