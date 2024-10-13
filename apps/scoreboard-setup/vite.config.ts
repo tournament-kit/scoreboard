@@ -7,13 +7,13 @@ import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 export default defineConfig({
   base: process.env.BASE_URL,
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/scoreboard',
+  cacheDir: '../../node_modules/.vite/apps/scoreboard-setup',
   server: {
-    port: 4200,
+    port: 5200,
     host: 'localhost',
   },
   preview: {
-    port: 4300,
+    port: 5300,
     host: 'localhost',
   },
   plugins: [vue(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
@@ -22,7 +22,7 @@ export default defineConfig({
   //  plugins: [ nxViteTsPaths() ],
   // },
   build: {
-    outDir: '../../dist/apps/scoreboard',
+    outDir: '../../dist/apps/scoreboard-setup',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
@@ -36,7 +36,7 @@ export default defineConfig({
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
-      reportsDirectory: '../../coverage/apps/scoreboard',
+      reportsDirectory: '../../coverage/apps/scoreboard-setup',
       provider: 'v8',
     },
   },

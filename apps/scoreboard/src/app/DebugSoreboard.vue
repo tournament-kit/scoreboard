@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, } from 'vue';
-import { getCanvasFont, getTextSize } from '../utils/getTextWidth';
-import { splitText } from '../utils/splitText';
+import { getCanvasFont, getTextSize, splitText } from '@scoreboard/components';
 
 const text = "a11";
 
@@ -30,13 +29,6 @@ function initHighDIPCanvas(canvas) {
 
 
 onMounted(async () => {
-
-  const font = new FontFace("Xolonium", "url(/fonts/Xolonium-Regular.otf)");
-  // wait for font to be loaded
-  await font.load();
-  // add font to document
-  document.fonts.add(font);
-
   initHighDIPCanvas(canvasEl.value);
 
   const ctx = canvasEl.value.getContext("2d");
@@ -65,17 +57,9 @@ onMounted(async () => {
       <span ref="textEl">{{ text }}</span>
     </div>
     <div class="parts">
-      <span
-        v-for="part in parts"
-        :key="part"
-      >{{ part }}</span>
+      <span v-for="part in parts" :key="part">{{ part }}</span>
     </div>
-    <canvas
-      ref="canvasEl"
-      width="200"
-      height="50"
-      style="display: block;"
-    />
+    <canvas ref="canvasEl" width="200" height="50" style="display: block;" />
     <div>Width: {{ textSize }}</div>
     <div>Canvas Width: {{ canvasTextSize }}</div>
   </div>
@@ -83,16 +67,16 @@ onMounted(async () => {
 
 
 <style scoped>
-  .debug {
-    background-color: aliceblue;
-  }
+.debug {
+  background-color: aliceblue;
+}
 
-  span {
-    font-family: 'Xolonium';
-  }
+span {
+  font-family: 'Xolonium';
+}
 
-  .parts {
-    display: flex;
-    flex-wrap: wrap;
-  }
+.parts {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>

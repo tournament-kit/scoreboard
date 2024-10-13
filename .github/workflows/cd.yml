@@ -45,11 +45,18 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Upload Artifact
+      - name: Move files
+        run: 
+          - mv dist/apps/scoreboard/index.html dist/apps/scoreboard/view.html
+          - mv dist/apps/scoreboard-setup/index.html dist/apps/scoreboard/index.html
+          - mv dist/apps/scoreboard-setup/assets/* dist/apps/scoreboard/assets
+
+      - name: Upload dist/apps/scoreboard
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist/apps/scoreboard
+
 
   deploy:
     name: Deploy
@@ -70,6 +77,9 @@ jobs:
     # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - name: Deploy scoreboard
+        id: apps-scoreboard
+        uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
+      - name: Deploy scoreboard-setup
+        id: apps-scoreboard-setup
         uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action

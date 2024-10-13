@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, defineProps, ref, onUnmounted } from 'vue';
-import { splitText } from '../utils/splitText';
+import { onMounted, defineProps, ref, onUnmounted, onUpdated } from 'vue';
+import { splitText } from './utils/splitText';
 
 
 const { max, min, text } = defineProps({
@@ -10,7 +10,7 @@ const { max, min, text } = defineProps({
   },
   min: {
     type: Number,
-    default: 20,
+    default: 12,
   },
   text: {
     type: String,
@@ -20,13 +20,13 @@ const { max, min, text } = defineProps({
 
 const maxLineCount = 1
 
-const root = ref()
+const root = ref<HTMLSpanElement | null>(null)
 
-const updateFontsize = () => {
-  let element: HTMLSpanElement = root.value;
+const updateFontsize = (element: HTMLSpanElement) => {
   element.style.display = 'inline-block';
   element.style.wordBreak = 'break-all';
   element.style.lineHeight = '1px';
+  element.style.whiteSpace = 'normal';
 
   // then keep trying untill it fits
   let fontSize = max;
@@ -37,14 +37,20 @@ const updateFontsize = () => {
     fontSize -= stepSize;
     element.style.fontSize = fontSize + 'px';
   }
-  element.style.display = null;
-  element.style.lineHeight = null;
-  element.style.wordBreak = null;
+  element.style.whiteSpace = 'pre';
+  element.style.removeProperty('display');
+  element.style.removeProperty('word-break');
+  element.style.removeProperty('line-height');
 }
 
 const update  = () => {
-  let element: HTMLSpanElement = root.value;
-  updateFontsize();
+  let element = root.value;
+
+  if (!element) {
+    return;
+  }
+
+  element && updateFontsize(element);
   element.innerHTML = '';
 
   splitText(text).forEach((line) => {
@@ -56,15 +62,25 @@ const update  = () => {
 
 const observer = new MutationObserver(update);
 onMounted(() => {
+  let element = root.value;
+
+  if (!element) {
+    return;
+  }
+
   observer.observe(
-    root.value,
+    element,
     { subtree: true, characterData: true }
   );
-  root.value.style.opacity = 0;
+  element.style.opacity = "0";
   setTimeout(() => {
     update();
-    root.value.style.opacity = null;
+    element.style.removeProperty('opacity');
   }, 1);
+});
+
+onUpdated(() => {
+  update();
 });
 
 onUnmounted(() => {

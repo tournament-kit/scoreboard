@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { PLAYER_NAMES } from '../constants';
-import Scoreboard from './Scoreboard.vue';
+import { Scoreboard } from '@scoreboard/components';
 
 let playerNames = PLAYER_NAMES;
-playerNames = playerNames.sort((a:string, b:string) => {
+playerNames = playerNames.sort((a: string, b: string) => {
   return a.length - b.length;
 });
 const players = [];
-for (let index = 0; index < playerNames.length; index+=2) {
+for (let index = 0; index < playerNames.length; index += 2) {
   players.push(
     [
       {
@@ -27,10 +27,6 @@ for (let index = 0; index < playerNames.length; index+=2) {
 
 
 <template>
-  <Scoreboard
-    v-for="[player1, player2] in players"
-    :key="player1.name+player2.name"
-    :player1="player1"
-    :player2="player2"
-  />
+  <Scoreboard v-for="[player1, player2] in players" :key="player1.name + player2.name" :player1="player1"
+    :player2="player2" />
 </template>
