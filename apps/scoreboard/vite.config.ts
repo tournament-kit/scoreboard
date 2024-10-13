@@ -5,7 +5,7 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/scoreboard' : '/',
+  base: process.env.BASE_URL,
   root: __dirname,
   cacheDir: '../../node_modules/.vite/apps/scoreboard',
   server: {
